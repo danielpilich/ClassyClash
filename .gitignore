@@ -1,7 +1,7 @@
 *.exe
 *.dsym
 main
-textures
+assets
 
 ### C++ ###
 # Prerequisites
