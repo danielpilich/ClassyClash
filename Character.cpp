@@ -1,11 +1,17 @@
 #include "Character.h"
 #include "raymath.h"
 
+Character::Character()
+{
+    width = texture.width / maxFrames;
+    height = texture.height;
+}
+
 void Character::setScreenPosition(int windowWidth, int windowHeight)
 {
     screenPosition = {
-        (float)windowWidth / 2.0f - 4.0f * (0.5f * (float)texture.width / 6.0f),
-        (float)windowHeight / 2.0f - 4.0f * (0.5f * (float)texture.height)};
+        (float)windowWidth / 2.0f - 4.0f * (0.5f * width),
+        (float)windowHeight / 2.0f - 4.0f * (0.5f * height)};
 }
 
 void Character::tick(float deltaTime)
@@ -47,15 +53,15 @@ void Character::tick(float deltaTime)
 
     // Draw the character
     Rectangle heroSource{
-        frame * (float)texture.width / 6.f,
+        frame * width,
         0.f,
-        textureDirection * (float)texture.width / 6.f,
-        (float)texture.height};
+        textureDirection * width,
+        height};
     Rectangle heroDest{
         screenPosition.x,
         screenPosition.y,
-        4.f * texture.width / 6.f,
-        4.f * texture.height};
+        4.f * width,
+        4.f * height};
 
     DrawTexturePro(texture, heroSource, heroDest, Vector2{}, 0.f, WHITE);
 }

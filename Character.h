@@ -3,6 +3,7 @@
 class Character
 {
 public:
+    Character();
     Vector2 getWorldPosition() { return worldPosition; }
     void setScreenPosition(int windowWidth, int windowHeight);
     void tick(float deltaTime);
@@ -13,10 +14,12 @@ private:
     Texture2D texture{idle};
     Vector2 screenPosition{};
     Vector2 worldPosition{};
+    float width{};
+    float height{};
     float textureDirection{1.f};
     float runningTime{};
     int frame{};
-    const int maxFrames{6};
-    const float updateTime{1.f / 12.f};
-    const float speed{4.f};
+    int maxFrames{6};
+    float updateTime{1.f / 12.f};
+    float speed{4.f};
 };
