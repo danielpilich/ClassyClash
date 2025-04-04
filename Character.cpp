@@ -5,6 +5,7 @@ Character::Character()
 {
     width = texture.width / maxFrames;
     height = texture.height;
+    worldPositionLastFrame = worldPosition;
 }
 
 void Character::setScreenPosition(int windowWidth, int windowHeight)
@@ -29,6 +30,7 @@ void Character::tick(float deltaTime)
     if (Vector2Length(direction) != 0.0)
     {
         Vector2 movement = Vector2Scale(Vector2Normalize(direction), speed);
+        worldPositionLastFrame = worldPosition;
         worldPosition = Vector2Add(worldPosition, movement); // worldPosition = worldPosition + movement
 
         texture = run;
@@ -64,4 +66,8 @@ void Character::tick(float deltaTime)
         4.f * height};
 
     DrawTexturePro(texture, heroSource, heroDest, Vector2{}, 0.f, WHITE);
+}
+
+void Character:: undoMovement(){
+    worldPosition = worldPositionLastFrame;
 }

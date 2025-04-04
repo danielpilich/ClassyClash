@@ -7,6 +7,7 @@ public:
     Vector2 getWorldPosition() { return worldPosition; }
     void setScreenPosition(int windowWidth, int windowHeight);
     void tick(float deltaTime);
+    void undoMovement();
 
 private:
     Texture2D idle{LoadTexture("assets/characters/hero_idle.png")};
@@ -14,6 +15,7 @@ private:
     Texture2D texture{idle};
     Vector2 screenPosition{};
     Vector2 worldPosition{};
+    Vector2 worldPositionLastFrame{};
     float width{};
     float height{};
     float textureDirection{1.f};
