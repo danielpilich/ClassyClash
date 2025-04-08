@@ -7,6 +7,7 @@ public:
     Vector2 getWorldPosition() { return worldPosition; }
     void tick(float deltaTime);
     void undoMovement();
+    Rectangle getCollisionRectangle();
 
 private:
     Texture2D idle{LoadTexture("assets/characters/hero_idle.png")};

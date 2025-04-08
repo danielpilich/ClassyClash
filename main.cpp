@@ -12,7 +12,9 @@ int main()
 
     Character hero{windowWidth, windowHeight};
 
-    Prop rock{Vector2{0.f,0.f}, LoadTexture("assets/map/Rock.png")};
+    Prop props[2]{
+        Prop{Vector2{600.f, 300.f}, LoadTexture("assets/map/Rock.png")},
+        Prop{Vector2{400.f, 500.f}, LoadTexture("assets/map/Log.png")}};
 
     const Texture2D map{LoadTexture("assets/map/WorldMap.png")};
     Vector2 mapPosition{0.0, 0.0};
@@ -29,22 +31,33 @@ int main()
 
         // Moving the map
         mapPosition = Vector2Scale(hero.getWorldPosition(), -1.f);
-
         // Draw the map
         DrawTextureEx(map, mapPosition, 0.f, mapScale, WHITE);
 
         // Render props
-        rock.Render(hero.getWorldPosition());
+        for (auto prop : props)
+        {
+            prop.Render(hero.getWorldPosition());
+        }
 
+        // Draw the hero
         hero.tick(deltaTime);
 
-        // World bounds
+        // Check world bounds
         if (hero.getWorldPosition().x < 0.f ||
             hero.getWorldPosition().y < 0.f ||
             hero.getWorldPosition().x + windowWidth > map.width * mapScale ||
             hero.getWorldPosition().y + windowHeight > map.height * mapScale)
         {
             hero.undoMovement();
+        }
+        // Check collision
+        for (auto prop : props)
+        {
+            if (CheckCollisionRecs(prop.getCollisionRectangle(hero.getWorldPosition()), hero.getCollisionRectangle()))
+            {
+                hero.undoMovement();
+            }
         }
 
         EndDrawing();
