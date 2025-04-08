@@ -2,6 +2,7 @@
 #include "raymath.h"
 #include "Character.h"
 #include "Prop.h"
+#include "Enemy.h"
 
 int main()
 {
@@ -15,6 +16,11 @@ int main()
     Prop props[2]{
         Prop{Vector2{600.f, 300.f}, LoadTexture("assets/map/Rock.png")},
         Prop{Vector2{400.f, 500.f}, LoadTexture("assets/map/Log.png")}};
+
+    Enemy goblin{
+        Vector2{0.f, 0.f},
+        LoadTexture("assets/characters/goblin_idle.png"),
+        LoadTexture("assets/characters/goblin_run.png")};
 
     const Texture2D map{LoadTexture("assets/map/WorldMap.png")};
     Vector2 mapPosition{0.0, 0.0};
@@ -59,6 +65,9 @@ int main()
                 hero.undoMovement();
             }
         }
+
+        // Draw enemies
+        goblin.tick(deltaTime);
 
         EndDrawing();
     }
