@@ -1,6 +1,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "Character.h"
+#include "Prop.h"
 
 int main()
 {
@@ -9,12 +10,13 @@ int main()
 
     InitWindow(windowWidth, windowHeight, "Classy Clash!");
 
-    Character hero{};
-    hero.setScreenPosition(windowWidth, windowHeight);
+    Character hero{windowWidth, windowHeight};
+
+    Prop rock{Vector2{0.f,0.f}, LoadTexture("assets/map/Rock.png")};
 
     const Texture2D map{LoadTexture("assets/map/WorldMap.png")};
     Vector2 mapPosition{0.0, 0.0};
-    const float mapScale{4.f};
+    const float mapScale{3.5f};
 
     SetTargetFPS(60);
 
@@ -30,6 +32,9 @@ int main()
 
         // Draw the map
         DrawTextureEx(map, mapPosition, 0.f, mapScale, WHITE);
+
+        // Render props
+        rock.Render(hero.getWorldPosition());
 
         hero.tick(deltaTime);
 

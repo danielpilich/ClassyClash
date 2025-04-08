@@ -1,18 +1,16 @@
 #include "Character.h"
 #include "raymath.h"
 
-Character::Character()
+Character::Character(int windowWidth, int windowHeight)
 {
     width = texture.width / maxFrames;
     height = texture.height;
-    worldPositionLastFrame = worldPosition;
-}
 
-void Character::setScreenPosition(int windowWidth, int windowHeight)
-{
+    worldPositionLastFrame = worldPosition;
+
     screenPosition = {
-        (float)windowWidth / 2.0f - 4.0f * (0.5f * width),
-        (float)windowHeight / 2.0f - 4.0f * (0.5f * height)};
+        static_cast<float>(windowWidth) / 2.0f - scale * (0.5f * width),
+        static_cast<float>(windowHeight) / 2.0f - scale * (0.5f * height)};
 }
 
 void Character::tick(float deltaTime)
@@ -62,12 +60,13 @@ void Character::tick(float deltaTime)
     Rectangle heroDest{
         screenPosition.x,
         screenPosition.y,
-        4.f * width,
-        4.f * height};
+        scale * width,
+        scale * height};
 
     DrawTexturePro(texture, heroSource, heroDest, Vector2{}, 0.f, WHITE);
 }
 
-void Character:: undoMovement(){
+void Character::undoMovement()
+{
     worldPosition = worldPositionLastFrame;
 }
