@@ -8,7 +8,7 @@ public:
     Rectangle getCollisionRectangle(Vector2 heroPosition);
 
 private:
-    Texture2D texture{};
     Vector2 worldPosition{};
+    Texture2D texture{};
     float scale{4.f};
 };

@@ -3,6 +3,10 @@
 
 Character::Character(int windowWidth, int windowHeight)
 {
+    idle = LoadTexture("assets/characters/hero_idle.png");
+    run = LoadTexture("assets/characters/hero_run.png");
+    texture = idle;
+
     width = texture.width / maxFrames;
     height = texture.height;
 
@@ -64,18 +68,4 @@ void Character::tick(float deltaTime)
         scale * height};
 
     DrawTexturePro(texture, heroSource, heroDest, Vector2{}, 0.f, WHITE);
-}
-
-void Character::undoMovement()
-{
-    worldPosition = worldPositionLastFrame;
-}
-
-Rectangle Character::getCollisionRectangle()
-{
-    return Rectangle{
-        screenPosition.x,
-        screenPosition.y,
-        width * scale,
-        height * scale};
 }
