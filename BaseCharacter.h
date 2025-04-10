@@ -6,8 +6,8 @@ class BaseCharacter
 {
 public:
     BaseCharacter();
+    virtual void tick(float deltaTime);
     Vector2 getWorldPosition() { return worldPosition; }
-    void tick(float deltaTime);
     void undoMovement();
     Rectangle getCollisionRectangle();
 

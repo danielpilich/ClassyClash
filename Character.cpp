@@ -19,6 +19,7 @@ Character::Character(int windowWidth, int windowHeight)
 
 void Character::tick(float deltaTime)
 {
+    BaseCharacter::tick(deltaTime);
     // Update character movement
     Vector2 direction{};
     if (IsKeyDown(KEY_A))
@@ -37,35 +38,11 @@ void Character::tick(float deltaTime)
 
         texture = run;
 
-        textureDirection = direction.x < 0.f ? -1.f : direction.x > 0.f ? 1.f
-                                                                        : textureDirection;
+        // textureDirection = direction.x < 0.f ? -1.f : direction.x > 0.f ? 1.f
+        //                                                                 : textureDirection;
     }
     else
     {
         texture = idle;
     }
-
-    // Update animation frame
-    runningTime += deltaTime;
-    if (runningTime >= updateTime)
-    {
-        runningTime = 0.f;
-        frame++;
-        if (frame > maxFrames)
-            frame = 0;
-    }
-
-    // Draw the character
-    Rectangle heroSource{
-        frame * width,
-        0.f,
-        textureDirection * width,
-        height};
-    Rectangle heroDest{
-        screenPosition.x,
-        screenPosition.y,
-        scale * width,
-        scale * height};
-
-    DrawTexturePro(texture, heroSource, heroDest, Vector2{}, 0.f, WHITE);
 }

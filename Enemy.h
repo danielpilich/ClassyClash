@@ -5,5 +5,4 @@ class Enemy : public BaseCharacter
 {
 public:
     Enemy(Vector2 position, Texture2D idleTexture, Texture2D runTexture);
-    void tick(float deltaTime);
 };
