@@ -9,6 +9,7 @@ public:
     BaseCharacter();
     virtual void tick(float deltaTime);
     Vector2 getWorldPosition() { return worldPosition; }
+    Vector2 getScreenPosition() { return screenPosition; }
     void undoMovement();
     Rectangle getCollisionRectangle();
 
