@@ -1,3 +1,6 @@
+#ifndef CHARACTER_H
+#define CHARACTER_H
+
 #include "BaseCharacter.h"
 #include "raylib.h"
 
@@ -10,3 +13,5 @@ public:
 private:
     float textureDirection{1.f};
 };
+
+#endif
