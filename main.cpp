@@ -3,6 +3,7 @@
 #include "Character.h"
 #include "Prop.h"
 #include "Enemy.h"
+#include <string>
 
 int main()
 {
@@ -18,9 +19,24 @@ int main()
         Prop{Vector2{400.f, 500.f}, LoadTexture("assets/map/Log.png")}};
 
     Enemy goblin{
-        Vector2{300.f, 300.f},
+        Vector2{800.f, 300.f},
         LoadTexture("assets/characters/goblin_idle.png"),
         LoadTexture("assets/characters/goblin_run.png")};
+
+    Enemy slime{
+        Vector2{500.f, 700.f},
+        LoadTexture("assets/characters/slime_idle.png"),
+        LoadTexture("assets/characters/slime_run.png")};
+
+    Enemy *enemies[]{
+        &goblin,
+        &slime};
+
+    for (auto enemy : enemies)
+    {
+        enemy->setTarget(&hero);
+    }
+
     goblin.setTarget(&hero);
 
     const Texture2D map{LoadTexture("assets/map/WorldMap.png")};
@@ -47,6 +63,20 @@ int main()
             prop.Render(hero.getWorldPosition());
         }
 
+        if (!hero.getAlive())
+        { // Character IS NOT alive
+            DrawText("Game Over!", 85.f, 45.f, 40, RED);
+            EndDrawing();
+            continue;
+        }
+        else
+        { // Character IS alive
+            std::string healthInfo{"Health: "};
+            healthInfo.append(std::to_string(hero.getHealth()), 0, 5);
+
+            DrawText(healthInfo.c_str(), 65.f, 45.f, 40, RED);
+        }
+
         // Draw the hero
         hero.tick(deltaTime);
 
@@ -68,12 +98,21 @@ int main()
             }
         }
 
+        // Check sword collision
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-            if (CheckCollisionRecs(goblin.getCollisionRectangle(), hero.getCollisionRectangle()))
-                goblin.setAlive(false);
+        {
+            for (auto enemy : enemies)
+            {
+                if (CheckCollisionRecs(enemy->getCollisionRectangle(), hero.getCollisionRectangle()))
+                    enemy->setAlive(false);
+            }
+        }
 
         // Draw enemies
-        goblin.tick(deltaTime);
+        for (auto enemy : enemies)
+        {
+            enemy->tick(deltaTime);
+        }
 
         EndDrawing();
     }
