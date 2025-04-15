@@ -7,11 +7,13 @@
 class Character : public BaseCharacter
 {
 public:
-    Character(int windowWidth, int windowHeight);
+    Character(int winWidth, int winHeight);
     virtual void tick(float deltaTime) override;
+    virtual Vector2 getScreenPosition() override;
 
 private:
-    float textureDirection{1.f};
+    int windowWidth{};
+    int windowHeight{};
 };
 
 #endif

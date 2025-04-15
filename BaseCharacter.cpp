@@ -19,15 +19,32 @@ void BaseCharacter::tick(float deltaTime)
             frame = 0;
     }
 
+    if (Vector2Length(velocity) != 0.0)
+    {
+        Vector2 movement = Vector2Scale(Vector2Normalize(velocity), speed);
+        worldPosition = Vector2Add(worldPosition, movement); // worldPosition = worldPosition + movement
+
+        textureDirection = velocity.x < 0.f ? -1.f : velocity.x > 0.f ? 1.f
+                                                                      : textureDirection;
+
+        texture = run;
+    }
+    else
+    {
+        texture = idle;
+    }
+
+    velocity = {};
+
     // Draw the Character
     Rectangle heroSource{
         frame * width,
         0.f,
-        width, // * textureDirection
+        width * textureDirection,
         height};
     Rectangle heroDest{
-        screenPosition.x,
-        screenPosition.y,
+        getScreenPosition().x,
+        getScreenPosition().y,
         scale * width,
         scale * height};
 
@@ -42,8 +59,8 @@ void BaseCharacter::undoMovement()
 Rectangle BaseCharacter::getCollisionRectangle()
 {
     return Rectangle{
-        screenPosition.x,
-        screenPosition.y,
+        getScreenPosition().x,
+        getScreenPosition().y,
         width * scale,
         height * scale};
 }
