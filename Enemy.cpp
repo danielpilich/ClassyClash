@@ -15,7 +15,11 @@ Enemy::Enemy(Vector2 position, Texture2D idleTexture, Texture2D runTexture)
 
 void Enemy::tick(float deltaTime)
 {
+    if (!getAlive())
+        return;
+
     velocity = Vector2Subtract(target->getScreenPosition(), getScreenPosition());
+
     BaseCharacter::tick(deltaTime);
 }
 

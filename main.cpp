@@ -58,7 +58,8 @@ int main()
         {
             hero.undoMovement();
         }
-        // Check collision
+
+        // Check collision for props
         for (auto prop : props)
         {
             if (CheckCollisionRecs(prop.getCollisionRectangle(hero.getWorldPosition()), hero.getCollisionRectangle()))
@@ -66,6 +67,10 @@ int main()
                 hero.undoMovement();
             }
         }
+
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            if (CheckCollisionRecs(goblin.getCollisionRectangle(), hero.getCollisionRectangle()))
+                goblin.setAlive(false);
 
         // Draw enemies
         goblin.tick(deltaTime);

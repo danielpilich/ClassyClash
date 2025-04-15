@@ -10,6 +10,7 @@ public:
     Character(int winWidth, int winHeight);
     virtual void tick(float deltaTime) override;
     virtual Vector2 getScreenPosition() override;
+    Rectangle getWeaponCollisionRectangle() { return weaponCollisionRectangle; }
 
 private:
     int windowWidth{};
